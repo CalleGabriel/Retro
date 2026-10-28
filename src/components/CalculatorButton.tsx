@@ -1,6 +1,6 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
-import CustomText from './CustomText'
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { colors } from '../constants/theme';
+import CustomText from './CustomText';
 
 interface CalculatorButtonProps {
   label: string;
@@ -8,47 +8,48 @@ interface CalculatorButtonProps {
   isDouble?: boolean;
   backgroundColor?: string;
   textColor?: string;
+  shadowColor?: string;
 }
 
-const CalculatorButton = ({ 
-  label, 
-  onPress, 
-  isDouble = false, 
-  backgroundColor = '#4A3563', 
-  textColor = '#FFE169' 
+const CalculatorButton = ({
+  label,
+  onPress,
+  isDouble = false,
+  backgroundColor = colors.number,
+  textColor = colors.text,
+  shadowColor = colors.shadow,
 }: CalculatorButtonProps) => {
   return (
-    <TouchableOpacity 
-      style={[
-        styles.button, 
-        isDouble ? styles.double : null, 
-        { backgroundColor }
-      ]} 
-      onPress={onPress}
-      activeOpacity={0.7}
-    >
-      <CustomText style={{ color: textColor, fontWeight: 'bold' }}>
-        {label}
-      </CustomText>
-    </TouchableOpacity>
-  )
-}
+    <View style={[styles.cell, isDouble && styles.double]}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor, borderColor: shadowColor }]}
+        onPress={onPress}
+        activeOpacity={0.7}
+        accessibilityRole="button"
+      >
+        <CustomText variant="small" style={{ color: textColor, fontWeight: 'bold' }}>
+          {label}
+        </CustomText>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  button: {
-    height: 70,
-    width: 70,
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 5,
-    borderBottomWidth: 4,
-    borderColor: '#241731', // Sombra retro en la parte inferior del botón
+  cell: {
+    flex: 1,
+    padding: 5,
   },
   double: {
-    width: 150,
-    alignItems: 'center',
+    flex: 2,
   },
-})
+  button: {
+    flex: 1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 5, // relieve retro
+  },
+});
 
-export default CalculatorButton
+export default CalculatorButton;

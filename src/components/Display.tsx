@@ -1,5 +1,5 @@
-import { View, StyleSheet } from 'react-native';
-import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { colors } from '../constants/theme';
 import CustomText from './CustomText';
 
 interface DisplayProps {
@@ -10,16 +10,14 @@ interface DisplayProps {
 const Display = ({ mainValue, subValue }: DisplayProps) => {
   return (
     <View style={styles.container}>
-      {subValue ? (
-        <CustomText variant="small" style={styles.subResult}>
-          {subValue}
-        </CustomText>
-      ) : null}
-      
-      <CustomText 
-        variant="big" 
-        numberOfLines={1} 
-        adjustsFontSizeToFit 
+      <CustomText variant="small" numberOfLines={1} style={styles.subResult}>
+        {subValue || ' '}
+      </CustomText>
+
+      <CustomText
+        variant="big"
+        numberOfLines={1}
+        adjustsFontSizeToFit
         style={styles.mainResult}
       >
         {mainValue}
@@ -34,12 +32,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     padding: 20,
-    backgroundColor: '#1E1428',
-    borderRadius: 8,
-    marginVertical: 10,
+    backgroundColor: colors.displayBg,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: colors.displayBorder,
+    marginBottom: 10,
   },
   subResult: {
-    color: '#C7B155',
+    color: colors.subText,
     marginBottom: 5,
   },
   mainResult: {
